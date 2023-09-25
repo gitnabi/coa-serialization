@@ -1,0 +1,87 @@
+version: '3'
+
+x-container-env: &container-env
+  GROUP_UDP_ADDR: ${GROUP_UDP_ADDR}
+  APP_ENVIRONMENT: prod
+
+services:
+  proxy:
+    hostname: "proxy"
+    restart: always
+    networks:
+      - net
+    ports:
+      - target: 2000
+        published: "2000"
+        protocol: udp
+        mode: host
+    image: gitnab/coa-serialization:proxy
+    environment:
+      <<: *container-env
+
+  native:
+    hostname: "native"
+    restart: always
+    networks:
+      - net
+    image: gitnab/coa-serialization:native
+    environment:
+      <<: *container-env
+
+  xml:
+    hostname: "xml"
+    restart: always
+    networks:
+      - net
+    image: gitnab/coa-serialization:xml
+    environment:
+      <<: *container-env
+
+  json:
+    hostname: "json"
+    restart: always
+    networks:
+      - net
+    image: gitnab/coa-serialization:json
+    environment:
+      <<: *container-env
+
+  protobuf:
+    hostname: "protobuf"
+    restart: always
+    networks:
+      - net
+    image: gitnab/coa-serialization:protobuf
+    environment:
+      <<: *container-env
+
+  avro:
+    hostname: "avro"
+    restart: always
+    networks:
+      - net
+    image: gitnab/coa-serialization:avro
+    environment:
+      <<: *container-env
+
+  yaml:
+    hostname: "yaml"
+    restart: always
+    networks:
+      - net
+    image: gitnab/coa-serialization:yaml
+    environment:
+      <<: *container-env
+
+  message_pack:
+    hostname: "message_pack"
+    restart: always
+    networks:
+      - net
+    image: gitnab/coa-serialization:message_pack
+    environment:
+      <<: *container-env
+
+networks:
+  net:
+   driver: bridge
